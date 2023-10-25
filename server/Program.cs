@@ -13,6 +13,8 @@ app.MapGet("/get-questions", () => QuestionRepository.GetQuestions());
 app.MapGet("/get-questions-with-answers", () => QuestionsWithAnswersRepository.GetQuestionsWithAnswers());
 app.MapGet("/get-random-question", () => RandomQuestion.GetRandomQuestion());
 app.MapGet("/get-new-random-question", () => NewRandomQuestion.GetNewRandomQuestion());
+app.MapGet("/get-random-questions", () => RandomQuestions.GetRandomQuestions(5));
+
 
 app.Run();
 
