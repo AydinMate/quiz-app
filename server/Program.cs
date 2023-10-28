@@ -3,7 +3,7 @@ var app = builder.Build();
 
 app.Use((ctx, next) =>
 {
-    ctx.Response.Headers["Access-Control-Allow-Origin"] = "http://localhost:5173";
+    ctx.Response.Headers["Access-Control-Allow-Origin"] = "*";
 
     return next();
 });

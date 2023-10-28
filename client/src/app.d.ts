@@ -5,7 +5,7 @@ declare namespace App {}
 
 declare class Answer {
 	id: string;
-	question_id: number;
+	questionId: number;
 	answer: string;
 }
 

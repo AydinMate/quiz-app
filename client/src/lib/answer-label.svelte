@@ -1,9 +1,25 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
+	import Icon from '@iconify/svelte';
+	export let answer: Answer;
 
-    export let answer: Answer
+	let checked = false;
+
+	const dispatch = createEventDispatcher();
+
+	const handleClick = () => {
+		checked = true;
+		const event = new CustomEvent('answer-clicked', {
+			detail: { answerId: answer.id, questionId: answer.questionId }
+		});
+		dispatch('answer-clicked', event);
+		checked = false;
+	};
 </script>
 
 <label class="flex items-center space-x-2">
-    <input class="checkbox" type="checkbox" on:change={() => console.log(answer.id, "clicked")} />
-    <p>{answer.answer}</p>
+	<button on:click={handleClick}>
+		<Icon icon="material-symbols:select" />
+	</button>
+	<p class="hover:cursor-pointer">{answer.answer}</p>
 </label>
