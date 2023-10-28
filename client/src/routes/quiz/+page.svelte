@@ -4,10 +4,10 @@
 	import QuestionLabel from '$lib/question-label.svelte';
 	import { onMount } from 'svelte';
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
-	import { hi } from './+page.server';
+	import { goto } from '$app/navigation';
 
 	let questions: Question[] = [];
-	let questionNumber = 0;
+	let questionNumber = 1;
 
 	const getRandomQuestions = async () => {
 		const res = await axios.get('http://localhost:5041/get-random-questions');
@@ -20,20 +20,21 @@
 		const chosenAnswerId = event.detail.detail.answerId;
 		const questionId = event.detail.detail.questionId;
 		console.log('chosen answer: ', chosenAnswerId, 'question id: ', questionId);
-		questionNumber += 1;
 
-		if (questionNumber === questions.length) {
-			hi(questionNumber);
+		if (questionNumber >= questions.length) {
+			goto('/results');
+		} else {
+			questionNumber += 1;
 		}
 	};
 </script>
 
 <div class="flex flex-col justify-center items-center h-[100vh]">
 	{#if questions.length > 0}
-		<h1 class="h1">Question {questionNumber + 1} of {questions.length}</h1>
-		<QuestionLabel question={questions[questionNumber].question} />
+		<h1 class="h1">Question {questionNumber} of {questions.length}</h1>
+		<QuestionLabel question={questions[questionNumber - 1].question} />
 		<div class="grid grid-cols-2 mt-[8rem] gap-x-[24rem] gap-y-[8rem]">
-			{#each questions[questionNumber].answers as answer}
+			{#each questions[questionNumber - 1].answers as answer}
 				<AnswerLabel {answer} on:answer-clicked={handleAnswerClicked} />
 			{/each}
 		</div>
