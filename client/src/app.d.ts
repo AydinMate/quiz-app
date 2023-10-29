@@ -15,3 +15,13 @@ declare class Question {
 	correct_answer_id: string;
 	answers: Answer[];
 }
+declare class AnswerForChecking {
+	question: string;
+	answerId: Answer.id;
+	questionId: Question.id;
+}
+
+declare class Result {
+	question: string;
+	isCorrect: boolean;
+}

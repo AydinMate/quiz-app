@@ -32,4 +32,42 @@ public class QuestionRepository
 
         return questions;
     }
+
+    public static string GetCorrectAnswerId(int questionId)
+    {
+        string? correctAnswerId = "No answer found";
+
+        using (var conn = DbConnection.GetDbConnection())
+        {
+            try
+            {
+                conn.Open();
+                string query = "SELECT correct_answer_id FROM \"new-questions\" WHERE id = @questionId";
+
+                using (var cmd = new NpgsqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@questionId", questionId);
+
+                    object? result = cmd.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        correctAnswerId = result.ToString();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+        if (correctAnswerId != null)
+        {
+            return correctAnswerId;
+        }
+        else
+        {
+            return "No answer found";
+        }
+    }
+
 }
