@@ -5,6 +5,8 @@
 	import { onMount } from 'svelte';
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
 	import Results from '$lib/results.svelte';
+	import user from '../../user';
+	import { goto } from '$app/navigation';
 
 	let questions: Question[] = [];
 	let questionNumber = 1;
@@ -51,25 +53,39 @@
 			questionNumber += 1;
 		}
 	};
+
+	$: isLoggedIn = $user === null || Object.keys($user).length === 0 ? false : true;
+
+	onMount(() => {
+		if (!isLoggedIn) {
+			goto('/');
+		}
+	});
 </script>
 
 <div class="flex flex-col justify-center items-center h-[100vh]">
-	{#if showResults === false}
-		{#if questions.length > 0}
-			<h1 class="h1">Question {questionNumber} of {questions.length}</h1>
-			<QuestionLabel question={questions[questionNumber - 1].question} />
-			<div class="grid grid-cols-2 mt-[8rem] gap-x-[24rem] gap-y-[8rem]">
-				{#each questions[questionNumber - 1].answers as answer}
-					<AnswerLabel {answer} on:answer-clicked={handleAnswerClicked} />
-				{/each}
-			</div>
+	{#if isLoggedIn}
+		{#if showResults === false}
+			{#if questions.length > 0}
+				<h1 class="h1">Question {questionNumber} of {questions.length}</h1>
+				<QuestionLabel question={questions[questionNumber - 1].question} />
+				<div class="grid grid-cols-2 mt-[8rem] gap-x-[24rem] gap-y-[8rem]">
+					{#each questions[questionNumber - 1].answers as answer}
+						<AnswerLabel {answer} on:answer-clicked={handleAnswerClicked} />
+					{/each}
+				</div>
+			{:else}
+				<div class="flex flex-col justify-center items-center h-full">
+					<ProgressRadial />
+				</div>
+			{/if}
+		{:else if results.length > 0}
+			<Results {results} />
 		{:else}
 			<div class="flex flex-col justify-center items-center h-full">
 				<ProgressRadial />
 			</div>
 		{/if}
-	{:else if results.length > 0}
-		<Results {results} />
 	{:else}
 		<div class="flex flex-col justify-center items-center h-full">
 			<ProgressRadial />
