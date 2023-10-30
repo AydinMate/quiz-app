@@ -30,7 +30,7 @@ app.MapGet("/get-random-question", () => RandomQuestion.GetRandomQuestion());
 app.MapGet("/get-new-random-question", () => NewRandomQuestion.GetNewRandomQuestion());
 app.MapGet("/get-random-questions", () => RandomQuestions.GetRandomQuestions(5));
 app.MapPost("/check-answers", (CheckModel[] checkAnswers) => CheckAnswer.CheckAnswers(checkAnswers));
-
+app.MapPost("/get-validation", (UsernameModel user) => UserRepository.GetValidation(user.Username));
 
 app.MapGet("/correct-answer-{id}" , (int id) => QuestionRepository.GetCorrectAnswerId(id));
 
