@@ -3,7 +3,7 @@ quiz-project.sln
 # server
 /server/.env
 /server/obj
-
+/server/bin
 
 
 # client
