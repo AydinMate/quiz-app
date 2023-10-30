@@ -1,5 +1,4 @@
 
-using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
@@ -32,6 +31,6 @@ app.MapGet("/get-random-questions", () => RandomQuestions.GetRandomQuestions(5))
 app.MapPost("/check-answers", (CheckModel[] checkAnswers) => CheckAnswer.CheckAnswers(checkAnswers));
 app.MapPost("/get-validation", (UsernameModel user) => UserRepository.GetValidation(user.Username));
 
-app.MapGet("/correct-answer-{id}" , (int id) => QuestionRepository.GetCorrectAnswerId(id));
+app.MapGet("/correct-answer-{id}", (int id) => QuestionRepository.GetCorrectAnswerId(id));
 
 app.Run();
