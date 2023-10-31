@@ -21,7 +21,13 @@ declare class AnswerForChecking {
 	questionId: Question.id;
 }
 
+declare class CheckingWithUser {
+	checkAnswers: AnswerForChecking[];
+	userId: number;
+}
+
 declare class Result {
 	question: string;
 	isCorrect: boolean;
 }
+

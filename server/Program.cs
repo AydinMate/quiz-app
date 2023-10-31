@@ -28,9 +28,9 @@ app.MapGet("/get-questions-with-answers", () => QuestionsWithAnswersRepository.G
 app.MapGet("/get-random-question", () => RandomQuestion.GetRandomQuestion());
 app.MapGet("/get-new-random-question", () => NewRandomQuestion.GetNewRandomQuestion());
 app.MapGet("/get-random-questions", () => RandomQuestions.GetRandomQuestions(5));
-app.MapPost("/check-answers", (CheckModel[] checkAnswers) => CheckAnswer.CheckAnswers(checkAnswers));
+app.MapPost("/check-answers", (CheckWithUser data) => CheckAnswer.CheckAnswers(data.CheckAnswers, data.UserId));
 app.MapPost("/get-validation", (UsernameModel user) => UserRepository.GetValidation(user.Username));
-
 app.MapGet("/correct-answer-{id}", (int id) => QuestionRepository.GetCorrectAnswerId(id));
+app.MapPost("/update-user-data", (UpdateUserModel data) => UserRepository.UpdateUserStats(data.Id, data.CorrectAnswers));
 
 app.Run();

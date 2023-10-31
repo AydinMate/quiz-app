@@ -14,6 +14,14 @@
 	let showResults: boolean = false;
 	let results: Result[] = [];
 
+	$: isLoggedIn = $user === null || Object.keys($user).length === 0 ? false : true;
+
+	onMount(() => {
+		if (!isLoggedIn) {
+			goto('/');
+		}
+	});
+
 	const getRandomQuestions = async () => {
 		const res = await axios.get('http://localhost:5041/get-random-questions');
 		questions = res.data;
@@ -21,12 +29,19 @@
 
 	const sendResponses = async (answersForChecking: AnswerForChecking[]) => {
 		try {
-			const res = await axios.post('http://localhost:5041/check-answers', answersForChecking, {
+			const checkingWithUser: CheckingWithUser = {
+				checkAnswers: answersForChecking,
+				userId: $user.id
+			};
+
+			const res = await axios.post('http://localhost:5041/check-answers', checkingWithUser, {
 				headers: {
 					'Content-Type': 'application/json'
 				}
 			});
-			results = res.data;
+			results = await res.data;
+
+			console.log(results);
 		} catch (error) {
 			console.error(error);
 		}
@@ -53,14 +68,6 @@
 			questionNumber += 1;
 		}
 	};
-
-	$: isLoggedIn = $user === null || Object.keys($user).length === 0 ? false : true;
-
-	onMount(() => {
-		if (!isLoggedIn) {
-			goto('/');
-		}
-	});
 </script>
 
 <div class="flex flex-col justify-center items-center h-[100vh]">

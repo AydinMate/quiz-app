@@ -4,8 +4,8 @@ public class QuestionModel
     public string? Question { get; set; }
     public string? CorrectAnswerId { get; set; }
     public List<AnswerModel>? Answers { get; set; }
-    
-   
+
+
     public QuestionModel()
     {
         // This is required for Entity Framework
@@ -16,6 +16,6 @@ public class QuestionModel
         Id = id;
         Question = question;
         CorrectAnswerId = correct_answer_id;
-        Answers=new List<AnswerModel>();
+        Answers = new List<AnswerModel>();
     }
 }

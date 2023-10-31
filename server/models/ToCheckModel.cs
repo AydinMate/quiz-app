@@ -1,4 +1,4 @@
-public class CheckModel
+public class ToCheckModel
 {
     public string Question { get; set; }
 
@@ -7,7 +7,7 @@ public class CheckModel
 
 
 
-    public CheckModel(string question, string answerId, int questionId)
+    public ToCheckModel(string question, string answerId, int questionId)
     {
         Question = question;
         AnswerId = answerId;
