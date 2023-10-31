@@ -3,6 +3,7 @@ import type { Config } from 'tailwindcss'
 import forms from '@tailwindcss/forms';
 import typography from '@tailwindcss/typography';
 import { skeleton } from '@skeletonlabs/tw-plugin'
+import { myCustomTheme } from './kangantheme';
 
 export default {
 	darkMode: 'class',
@@ -15,12 +16,7 @@ export default {
 		typography,
 		skeleton({
 			themes: {
-				preset: [
-					{
-						name: 'crimson',
-						enhancements: true,
-					},
-				],
+					custom: [myCustomTheme]
 			},
 		}),
 	],
