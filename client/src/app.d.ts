@@ -23,7 +23,7 @@ declare class AnswerForChecking {
 
 declare class CheckingWithUser {
 	checkAnswers: AnswerForChecking[];
-	userId: number;
+	userId: number | undefined;
 }
 
 declare class Result {
@@ -31,3 +31,13 @@ declare class Result {
 	isCorrect: boolean;
 }
 
+declare class UserDetails {
+	id: number;
+	username: string;
+}
+
+declare class LeaderboardUser {
+	username: string;
+	correctAnswers: number;
+	attempts: number;
+}

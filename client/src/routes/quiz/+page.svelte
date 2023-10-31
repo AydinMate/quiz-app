@@ -13,6 +13,7 @@
 	let answersForChecking: AnswerForChecking[] = [];
 	let showResults: boolean = false;
 	let results: Result[] = [];
+	let userDetails: UserDetails | null = $user
 
 	$: isLoggedIn = $user === null || Object.keys($user).length === 0 ? false : true;
 
@@ -31,7 +32,7 @@
 		try {
 			const checkingWithUser: CheckingWithUser = {
 				checkAnswers: answersForChecking,
-				userId: $user.id
+				userId: userDetails?.id
 			};
 
 			const res = await axios.post('http://localhost:5041/check-answers', checkingWithUser, {

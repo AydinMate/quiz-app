@@ -2,7 +2,7 @@ public class QuestionsWithAnswersRepository
 {
     public static List<QuestionModel> GetQuestionsWithAnswers()
     {
-        List<QuestionModel> questions = QuestionRepository.GetQuestions();
+        List<QuestionModel> questions = QuestionRepository.GetAllQuestions();
         List<AnswerModel> answers = AnswerRepository.GetAnswers();
 
         foreach (AnswerModel answer in answers)

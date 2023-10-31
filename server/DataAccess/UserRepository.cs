@@ -2,7 +2,7 @@ using Npgsql;
 
 public class UserRepository
 {
-    public static UserModel GetValidation(string findUsername)
+    public static UserModel GetUserExist(string findUsername)
     {
         UserModel? user = null;
         using (var conn = DbConnection.GetDbConnection())
@@ -84,5 +84,41 @@ public class UserRepository
         return "Updated";
     }
 
+     public static List<TopUserModel> GetTopUsers(int numberOfUsers)
+    {
+        List<TopUserModel> topUsers = new List<TopUserModel>();
 
+        using (var conn = DbConnection.GetDbConnection())
+        {
+            try
+            {
+                conn.Open();
+                string query = "SELECT * FROM \"user-list\" ORDER BY correct_answers DESC LIMIT @numberOfUsers";
+                using (var cmd = new NpgsqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("numberOfUsers", numberOfUsers);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            TopUserModel user = new TopUserModel
+                            {
+                                Username = reader.GetString(1),
+                                CorrectAnswers = reader.GetInt32(2), 
+                                Attempts = reader.GetInt32(3) 
+                            };
+                            topUsers.Add(user);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        return topUsers;
+    }
 }
